@@ -1,24 +1,41 @@
 require_relative 'Elf'
 
-file = File.open("input")
-file_data = file.readlines.map(&:chomp)
+class Parser
+  attr_reader :elves
 
-current_elf = Elf.new()
-elves = [current_elf]
+  def initialize
+    file = File.open("input")
+    @file_data = file.readlines.map(&:chomp)
+  end
 
-file_data.each do |data|
-  if data.length == 0
-    elves << current_elf
+  def process_data
     current_elf = Elf.new()
-  else
-    current_elf.add_food(FoodItem.new(data.to_i))
+    @elves = [current_elf]
+
+    @file_data.each do |data|
+      if data.length == 0
+        @elves << current_elf
+        current_elf = Elf.new()
+      else
+        current_elf.add_food(FoodItem.new(data.to_i))
+      end
+    end
+    @elves << current_elf
+
+    @elves.sort_by!(&:total_calories)
+    @elves.reverse!
+  end
+
+  def top_elf_calories
+    @elves[0].total_calories
+  end
+
+  def top_three_elf_calories
+    @elves[0].total_calories + @elves[1].total_calories + @elves[2].total_calories
   end
 end
-elves << current_elf
 
-elves.sort_by!(&:total_calories)
-elves.reverse!
-
-elves.each { |elf| puts elf.total_calories }
-
-puts elves[0].total_calories + elves[1].total_calories + elves[2].total_calories
+parser = Parser.new
+parser.process_data
+puts "Top calories: #{parser.top_elf_calories}"
+puts "Top three calories: #{parser.top_three_elf_calories}"
