@@ -4,18 +4,18 @@ class Parser
   attr_reader :elves
 
   def initialize
-    file = File.open("input")
+    file = File.open("day_1_elves/input")
     @file_data = file.readlines.map(&:chomp)
   end
 
   def process_data
-    current_elf = Elf.new()
+    current_elf = Elf.new
     @elves = [current_elf]
 
     @file_data.each do |data|
       if data.length == 0
         @elves << current_elf
-        current_elf = Elf.new()
+        current_elf = Elf.new
       else
         current_elf.add_food(FoodItem.new(data.to_i))
       end
