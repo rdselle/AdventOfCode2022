@@ -19,4 +19,8 @@ class Rucksack
       end
     end
   end
+
+  def all_items
+    return @compartment1 + @compartment2
+  end
 end
