@@ -3,7 +3,7 @@ require_relative 'Group'
 
 class Day3Parser
   def initialize
-    file = File.open("day_3_rucksacks/input")
+    file = File.open("input")
     @file_data = file.readlines.map(&:chomp)
     @rucksacks = []
     @groups = []
@@ -26,9 +26,19 @@ class Day3Parser
   def process_groups
     total = 0
 
+    t1 = Time.now
     @groups.each do |group|
       total += process_group(group)
     end
+    t2 = Time.now
+    puts "Method 1 group time: #{t2 - t1}"
+
+    t3 = Time.now
+    @groups.each do |group|
+      total += process_group_2(group)
+    end
+    t4 = Time.now
+    puts "Method 2 group time: #{t4 - t3}"
 
     total
   end
@@ -47,6 +57,18 @@ class Day3Parser
     end
   end
 
+  def process_group_2(group)
+    sack1 = group.rucksacks[0].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+    sack2 = group.rucksacks[1].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+    sack3 = group.rucksacks[2].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+
+    # sack1 = group.rucksacks[0].all_items.sort
+    # sack2 = group.rucksacks[1].all_items.sort 
+    # sack3 = group.rucksacks[2].all_items.sort 
+
+    0
+  end
+
   def sum_rucksack_points
     total = 0
 
@@ -58,10 +80,11 @@ class Day3Parser
   end
 
   def find_value_for_item(item)
-    if item.ord < 97
-      return item.ord - 38
+    ord = item.ord
+    if ord < 97
+      return ord - 38
     else
-      return item.ord - 96
+      return ord - 96
     end
   end
 end
