@@ -62,10 +62,6 @@ class Day3Parser
     sack2 = group.rucksacks[1].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
     sack3 = group.rucksacks[2].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
 
-    # sack1 = group.rucksacks[0].all_items.sort
-    # sack2 = group.rucksacks[1].all_items.sort 
-    # sack3 = group.rucksacks[2].all_items.sort 
-
     0
   end
 
