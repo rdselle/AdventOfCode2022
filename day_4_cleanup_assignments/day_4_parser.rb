@@ -1,5 +1,3 @@
-require_relative 'Pair'
-
 class Day4Parser
   def initialize
     file = File.open("input")
