@@ -15,7 +15,7 @@ class Day5Parser
     @file_data.each do |data|
       if data.length == initial_line_length
         parse_stack_row(data)
-      elsif data.length == initial_line_length -1 || data.length == 0
+      elsif data.length == (initial_line_length -1) || data.length == 0
       #do nothing
       else
         if !@part2
