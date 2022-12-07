@@ -1,6 +1,6 @@
 class Day7Parser
     def initialize
-      file = File.open("test_input")
+      file = File.open("input")
       @file_data = file.readlines.map(&:chomp)
       @current_directory = Directory.new(nil, "/")
       @root = @current_directory
@@ -25,6 +25,7 @@ class Day7Parser
       puts "size: #{@current_directory.total_size}"
       puts "size less than 100001: #{@current_directory.total_size_lt_100001}"
       puts "----------"
+      @current_directory.total_size_gtet_2080344
     end
 
     def process_command(elements)
@@ -55,6 +56,8 @@ class Directory
     attr_accessor :directories, :files
     attr_reader :parent, :name
 
+#27919656
+
     def initialize(parent, name)
         @parent = parent
         @name = name
@@ -73,6 +76,18 @@ class Directory
         end
 
         total
+    end
+
+    def total_size_gtet_2080344
+        # puts "name: #{@name} size: #{total_size}"
+        if total_size >= 2080344  && total_size < 3000000
+        # if total_size >= 1000000
+            puts "*** size: #{total_size} name: #{@name}"
+        end
+
+        @directories.each_value do |directory|
+            directory.total_size_gtet_2080344
+        end
     end
 
     def total_size
