@@ -3,7 +3,7 @@ require_relative 'Group'
 
 class Day3Parser
   def initialize
-    file = File.open("input")
+    file = File.open("day_3_rucksacks/input")
     @file_data = file.readlines.map(&:chomp)
     @rucksacks = []
     @groups = []
@@ -25,6 +25,7 @@ class Day3Parser
 
   def process_groups
     total = 0
+    total2 = 0
 
     t1 = Time.now
     @groups.each do |group|
@@ -35,10 +36,12 @@ class Day3Parser
 
     t3 = Time.now
     @groups.each do |group|
-      total += process_group_2(group)
+      total2 += process_group_2(group)
     end
     t4 = Time.now
     puts "Method 2 group time: #{t4 - t3}"
+    
+    puts "total2: #{total2}"
 
     total
   end
@@ -58,11 +61,13 @@ class Day3Parser
   end
 
   def process_group_2(group)
-    sack1 = group.rucksacks[0].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
-    sack2 = group.rucksacks[1].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
-    sack3 = group.rucksacks[2].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+    #TRASH
+    # sack1 = group.rucksacks[0].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+    # sack2 = group.rucksacks[1].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
+    # sack3 = group.rucksacks[2].all_items.sort { |x, y| find_value_for_item(x)<=>find_value_for_item(y) }
 
-    0
+    #good stuff
+    find_value_for_item((group.rucksacks[0].all_items & group.rucksacks[1].all_items & group.rucksacks[2].all_items).first)
   end
 
   def sum_rucksack_points

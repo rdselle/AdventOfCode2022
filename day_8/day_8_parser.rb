@@ -172,5 +172,8 @@ class SimpleTree
   end
 end
 
+t1 = Time.now
 parser = Day8Parser.new
 parser.process_data
+t2 = Time.now
+puts "time: #{t2 - t1}"
