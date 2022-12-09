@@ -1,6 +1,6 @@
 class Day7Parser
     def initialize
-      file = File.open("input")
+      file = File.open("day_7/input")
       @file_data = file.readlines.map(&:chomp)
       @current_directory = Directory.new(nil, "/")
       @root = @current_directory

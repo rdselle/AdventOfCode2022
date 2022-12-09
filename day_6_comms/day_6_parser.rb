@@ -1,6 +1,6 @@
 class Day6Parser
     def initialize
-      file = File.open("input")
+      file = File.open("day_6_comms/input")
       @file_data = file.readlines.map(&:chomp)
     end
 
