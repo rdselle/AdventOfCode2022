@@ -1,6 +1,6 @@
 class Day9Parser
     def initialize
-      file = File.open("day_9/test_input_2")
+      file = File.open("day_9/input")
       @file_data = file.readlines.map(&:chomp)
       @instructions = []
       @knots = [Knot.new(Knot.new(nil))]
@@ -87,6 +87,49 @@ class Knot
     # puts ""
     # puts ""
     puts "-----" if knots.find_index(self) == 0
+
+    # puts "head x: #{@head.current_coordinate[:x]} head y: #{@head.current_coordinate[:y]}"
+
+    if @head.current_coordinate[:x] == @current_coordinate[:x] + 2 &&
+      @head.current_coordinate[:y] == @current_coordinate[:y] + 2
+      puts "diagonal"
+      @current_coordinate[:x] += 1
+      @current_coordinate[:y] += 1
+      current_id = id_for_coordinate(@current_coordinate)
+      @visited_coordinates[current_id] = @current_coordinate
+      @tail.update_position(direction) if @tail
+    end
+
+    if @head.current_coordinate[:x] == @current_coordinate[:x] + 2 &&
+      @head.current_coordinate[:y] == @current_coordinate[:y] - 2
+      puts "diagonal"
+      @current_coordinate[:x] += 1
+      @current_coordinate[:y] -= 1
+      current_id = id_for_coordinate(@current_coordinate)
+      @visited_coordinates[current_id] = @current_coordinate
+      @tail.update_position(direction) if @tail
+    end
+
+    if @head.current_coordinate[:x] == @current_coordinate[:x] - 2 &&
+      @head.current_coordinate[:y] == @current_coordinate[:y] - 2
+      puts "diagonal"
+      @current_coordinate[:x] -= 1
+      @current_coordinate[:y] -= 1
+      current_id = id_for_coordinate(@current_coordinate)
+      @visited_coordinates[current_id] = @current_coordinate
+      @tail.update_position(direction) if @tail
+    end
+
+    if @head.current_coordinate[:x] == @current_coordinate[:x] - 2 &&
+      @head.current_coordinate[:y] == @current_coordinate[:y] + 2
+      puts "diagonal"
+      @current_coordinate[:x] -= 1
+      @current_coordinate[:y] += 1
+      current_id = id_for_coordinate(@current_coordinate)
+      @visited_coordinates[current_id] = @current_coordinate
+      @tail.update_position(direction) if @tail
+    end
+
     if @head.current_coordinate[:x] > @current_coordinate[:x] + 1
       @current_coordinate[:x] += 1
       @current_coordinate[:y] = @head.current_coordinate[:y]
