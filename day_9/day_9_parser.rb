@@ -1,6 +1,6 @@
 class Day9Parser
     def initialize
-      file = File.open("day_9/test_input_2")
+      file = File.open("day_9/input")
       @file_data = file.readlines.map(&:chomp)
       @instructions = []
       @knots = [Knot.new(Knot.new(nil))]
@@ -22,6 +22,13 @@ class Day9Parser
       end
 
       puts "visited spaces: #{@knots.last.visited_coordinates.keys.count}"
+      
+      @knots.each do |knot|
+        puts "#{@knots.find_index(knot)} visited #{knot.visited_coordinates.keys.count} spaces"
+      end
+      # @knots.last.visited_coordinates.each_key do |key|
+      #   puts key
+      # end
     end
 end
 
@@ -31,7 +38,6 @@ class Instruction
   def initialize(direction, distance)
     @direction = direction
     @distance = distance
-    # puts "#{direction} #{distance}"
   end
 end
 
@@ -72,15 +78,16 @@ class Knot
   end
 
   def update_position(direction, knots)
-    puts "calling update with #{direction} on #{knots.find_index(self)}.  tail is #{knots.find_index(@tail)}"
-    puts "head x: #{@head.current_coordinate[:x]} head y: #{@head.current_coordinate[:y]}"
-    puts ""
-    puts ""
+    # puts "calling update with #{direction} on #{knots.find_index(self)}.  tail is #{knots.find_index(@tail)}"
+    # puts "current x: #{@current_coordinate[:x]} current y: #{@current_coordinate[:y]}"
+    # puts "head x:    #{@head.current_coordinate[:x]} head y:    #{@head.current_coordinate[:y]}"
+    # puts ""
+    # puts ""
     if @head.current_coordinate[:x] > @current_coordinate[:x] + 1
       @current_coordinate[:x] += 1
       @current_coordinate[:y] = @head.current_coordinate[:y]
       current_id = id_for_coordinate(@current_coordinate)
-      @visited_coordinates[current_id] = @current_coordinate
+      @visited_coordinates[current_id] = @current_coordinate 
       @tail.update_position(direction, knots) if @tail
     end
 
@@ -88,7 +95,7 @@ class Knot
       @current_coordinate[:x] -= 1
       @current_coordinate[:y] = @head.current_coordinate[:y]
       current_id = id_for_coordinate(@current_coordinate)
-      @visited_coordinates[current_id] = @current_coordinate
+      @visited_coordinates[current_id] = @current_coordinate 
       @tail.update_position(direction, knots) if @tail
     end
 
@@ -96,7 +103,7 @@ class Knot
       @current_coordinate[:y] += 1
       @current_coordinate[:x] = @head.current_coordinate[:x]
       current_id = id_for_coordinate(@current_coordinate)
-      @visited_coordinates[current_id] = @current_coordinate
+      @visited_coordinates[current_id] = @current_coordinate 
       @tail.update_position(direction, knots) if @tail
     end
 
@@ -104,14 +111,9 @@ class Knot
       @current_coordinate[:y] -= 1
       @current_coordinate[:x] = @head.current_coordinate[:x]
       current_id = id_for_coordinate(@current_coordinate)
-      @visited_coordinates[current_id] = @current_coordinate
+      @visited_coordinates[current_id] = @current_coordinate 
       @tail.update_position(direction, knots) if @tail
     end
-    # puts "current x: #{@current_coordinate[:x]} current y: #{@current_coordinate[:y]}"
-    # puts "-----"
-    # @visited_coordinates.each_key do |key|
-    #   puts "key: #{key}"
-    # end
   end
 
   def id_for_coordinate(coordinate)
