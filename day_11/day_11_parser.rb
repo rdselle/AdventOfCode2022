@@ -1,8 +1,9 @@
 class Day11Parser
     def initialize
-      file = File.open("day_11/test_input")
+      file = File.open("day_11/input")
       @file_data = file.readlines.map(&:chomp)
       @monkeys = []
+      @lcm = 1
     end
 
     def process_data
@@ -39,6 +40,9 @@ class Day11Parser
         end
       end
       @monkeys << current_monkey
+      
+      @monkeys.each { |monkey| @lcm *= monkey.test }
+      puts @lcm
 
       # @monkeys.each do |monkey|
       #   monkey.items.each_with_index do |item, i|
@@ -55,6 +59,7 @@ class Day11Parser
         @monkeys.each do |monkey|
           monkey.items.each_with_index do |item, i|
             inspected_worry = monkey.perform_inspection(i)
+            inspected_worry %= @lcm
             if inspected_worry % monkey.test == 0
               @monkeys[monkey.throw_to_true].add_item(inspected_worry)
             else
