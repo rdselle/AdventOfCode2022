@@ -18,37 +18,25 @@ class Day11Parser
         case split[0]
         when "Monkey"
           current_monkey = Monkey.new(split[1].chars[0].to_i)
-          # puts "created monkey #{current_monkey.m_id}"
         when "Starting"
           (2..(split.length - 1)).each do |i|
             current_monkey.add_item(split[i].delete_suffix(",").to_i)
           end
         when "Operation:"
           current_monkey.add_operation(split[3], split[4], split[5])
-          # puts "monkey #{current_monkey.m_id} operation: #{current_monkey.operation}"
         when "Test:"
           current_monkey.test = split.last.to_i
-          # puts "monkey #{current_monkey.m_id} test: #{current_monkey.test}"
         when "If"
           if split[1] == "true:"
             current_monkey.throw_to_true = split.last.to_i
-            # puts "monkey #{current_monkey.m_id} throw to true: #{current_monkey.throw_to_true}"
           else
             current_monkey.throw_to_false = split.last.to_i
-            # puts "monkey #{current_monkey.m_id} throw to false: #{current_monkey.throw_to_false}"
           end
         end
       end
       @monkeys << current_monkey
       
       @monkeys.each { |monkey| @lcm *= monkey.test }
-      puts @lcm
-
-      # @monkeys.each do |monkey|
-      #   monkey.items.each_with_index do |item, i|
-      #     puts "monkey #{monkey.m_id} item #{item} operation result: #{monkey.perform_operation(i)}"
-      #   end
-      # end
     end
 
     def perform_rounds
@@ -94,7 +82,6 @@ class Monkey
   end
 
   def add_item(item)
-    # puts "adding #{item} to monkey #{@m_id}"
     @items << item
   end
 
