@@ -2,7 +2,7 @@ class Day12Parser
     attr_accessor :locations, :start
 
     def initialize
-      file = File.open("day_12/test_input")
+      file = File.open("day_12/input")
       @file_data = file.readlines.map(&:chomp)
       @width = @file_data[0].chars.length
       @height = @file_data.length
@@ -47,28 +47,28 @@ class Day12Parser
         path.steps << location
         if !@end_found
             if location.coordinates[:x] > 0
-                puts "x - 1, y: #{@locations[location.coordinates[:x] - 1][location.coordinates[:y]].coordinates}, steps: #{path.steps.length}"
+                # puts "x - 1, y: #{@locations[location.coordinates[:x] - 1][location.coordinates[:y]].coordinates}, steps: #{path.steps.length}"
 
                 new_path = Path.new(path.steps)
                 process_next(location.height, @locations[location.coordinates[:x] - 1][location.coordinates[:y]], new_path)
             end
 
             if location.coordinates[:x] < @width - 1
-                puts "x + 1, y: #{@locations[location.coordinates[:x] + 1][location.coordinates[:y]].coordinates}, steps: #{path.steps.length}"
+                # puts "x + 1, y: #{@locations[location.coordinates[:x] + 1][location.coordinates[:y]].coordinates}, steps: #{path.steps.length}"
 
                 new_path = Path.new(path.steps)
                 process_next(location.height, @locations[location.coordinates[:x] + 1][location.coordinates[:y]], new_path)
             end
 
             if location.coordinates[:y] > 0
-                puts "x, y - 1: #{@locations[location.coordinates[:x]][location.coordinates[:y] - 1].coordinates}, steps: #{path.steps.length}"
+                # puts "x, y - 1: #{@locations[location.coordinates[:x]][location.coordinates[:y] - 1].coordinates}, steps: #{path.steps.length}"
 
                 new_path = Path.new(path.steps)
                 process_next(location.height, @locations[location.coordinates[:x]][location.coordinates[:y] - 1], new_path)
             end
 
             if location.coordinates[:y] < @height - 1
-                puts "x, y + 1: #{@locations[location.coordinates[:x]][location.coordinates[:y] + 1].coordinates}, steps: #{path.steps.length}"
+                # puts "x, y + 1: #{@locations[location.coordinates[:x]][location.coordinates[:y] + 1].coordinates}, steps: #{path.steps.length}"
 
                 new_path = Path.new(path.steps)
                 process_next(location.height, @locations[location.coordinates[:x]][location.coordinates[:y] + 1], new_path)
@@ -83,6 +83,11 @@ class Day12Parser
             if new_location.goal
                 path.steps << new_location
                 puts "we won in #{path.steps.length} steps #{new_location.coordinates}"
+                # if path.steps.length == 32
+                #     path.steps.each do |step|
+                #         puts step.coordinates
+                #     end
+                # end
                 # path.steps.each_with_index do |step, index|
                 #     puts "step #{index}: #{step.coordinates} #{step.height}"
                 # end
@@ -109,7 +114,7 @@ class Path
     attr_accessor :steps
 
     def initialize(steps)
-        @steps = steps
+        @steps = steps.dup
     end
 end
 
